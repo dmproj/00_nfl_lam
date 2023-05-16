@@ -31,5 +31,6 @@ router.put("/:id", verify, async (req, res) => {
 //GET
 //GET ALL
 //GET USER STATS
+//GET USER STATS
 
 module.exports = router;
