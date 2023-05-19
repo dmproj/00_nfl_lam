@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users")
@@ -11,6 +13,8 @@ const listRoute= require("./routes/lists")
 dotenv.config();
 
 app.use(express.json())
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
 
 const connect = async () => {
   try {
