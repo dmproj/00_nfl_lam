@@ -5,19 +5,27 @@ import newRequest from "../../utils/newRequest";
 
 const Featured = ({ type }) => {
   const [content, setContent] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getRandomContent = async () => {
       try {
-        const res = await newRequest.get(`/movies/random=?type=${type}`);
-        setContent(res.data);
-        console.log(content);
+        const res = await newRequest.get(`/movies/random?type=${type}`, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjZkMmVkYmY3MjVkYzE0YjUwYjhkYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NDUzNDQxNiwiZXhwIjoxNjg3MTI2NDE2fQ.vnSMTiG8eLt2krMhYEos_RZZz6iprGaZYcEWmiBE8eY",
+          },
+        });
+        setContent(res.data[0]);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
     getRandomContent();
-  }, [type, content]);
+  }, [type]);
+
   return (
     <div className="featured">
       {type && (
@@ -41,21 +49,27 @@ const Featured = ({ type }) => {
           </select>
         </div>
       )}
-      <img src={content.img} alt="" />
-      <div className="info">
-        <img src={content.imgTitle} alt="" />
-        <span className="desc">{content.desc}</span>
-        <div className="buttons">
-          <button className="play">
-            <PlayArrow />
-            <span>Play</span>
-          </button>
-          <button className="more">
-            <InfoOutlined />
-            <span>Info</span>
-          </button>
-        </div>
-      </div>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <img src={content?.img} alt="" />
+          <div className="info">
+            <img src={content.imgTitle} alt="" />
+            <span className="desc">{content?.desc}</span>
+            <div className="buttons">
+              <button className="play">
+                <PlayArrow />
+                <span>Play</span>
+              </button>
+              <button className="more">
+                <InfoOutlined />
+                <span>Info</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
