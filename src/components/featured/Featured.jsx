@@ -25,6 +25,7 @@ const Featured = ({ type }) => {
     };
     getRandomContent();
   }, [type]);
+  console.log(content)
 
   return (
     <div className="featured">
