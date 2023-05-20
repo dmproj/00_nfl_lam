@@ -11,7 +11,7 @@ const Featured = ({ type }) => {
       try {
         const res = await newRequest.get(`/movies/random=?type=${type}`);
         setContent(res.data);
-        console.log(content)
+        console.log(content);
       } catch (error) {
         console.log(error);
       }
@@ -41,19 +41,10 @@ const Featured = ({ type }) => {
           </select>
         </div>
       )}
-      <img
-        src={content.img}
-        alt=""
-      />
+      <img src={content.img} alt="" />
       <div className="info">
-        <img
-          src={content.imgTitle}
-          alt=""
-        />
-        <span className="desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptate
-          consequatur dolore ea eos? Earum saepe qui sapiente similique temporibus!
-        </span>
+        <img src={content.imgTitle} alt="" />
+        <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />
