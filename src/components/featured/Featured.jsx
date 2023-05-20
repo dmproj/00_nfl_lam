@@ -1,8 +1,23 @@
+import { useState, useEffect } from "react";
 import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import "./featured.scss";
+import newRequest from "../../utils/newRequest";
 
 const Featured = ({ type }) => {
-  console.log(type)
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await newRequest.get(`/movies/random=?type=${type}`);
+        setContent(res.data);
+        console.log(content)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRandomContent();
+  }, [type, content]);
   return (
     <div className="featured">
       {type && (
@@ -26,9 +41,15 @@ const Featured = ({ type }) => {
           </select>
         </div>
       )}
-      <img src="https://thumbs.dreamstime.com/z/agama-as-toy-your-children-please-feed-me-1016767.jpg" alt="" />
+      <img
+        src={content.img}
+        alt=""
+      />
       <div className="info">
-        <img src="https://thumbs.dreamstime.com/z/spain-alahambra-moorish-patio-2742692.jpg" alt="" />
+        <img
+          src={content.imgTitle}
+          alt=""
+        />
         <span className="desc">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptate
           consequatur dolore ea eos? Earum saepe qui sapiente similique temporibus!

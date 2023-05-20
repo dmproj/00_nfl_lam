@@ -48,6 +48,10 @@ function App() {
         },
 
         {
+          path: "/watch",
+          element: <Watch />,
+        },
+        {
           path: "/register",
           element: !user ? <Register /> : <Navigate to="/" replace />,
         },

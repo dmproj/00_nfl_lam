@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
-import newRequest from "../../utils/newRequest.js"
+import newRequest from "../../utils/newRequest.js";
 import "./home.scss";
-import Navbar from "../../components/navbar/Navbar.jsx";
 import Featured from "../../components/featured/Featured";
 import List from "../../components/list/List";
 
 const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
-  const [genre, setGenre] = useState(null);
+  const [genre, setGenre] = useState("");
 
   useEffect(() => {
     async function getRandomList() {
@@ -32,11 +30,12 @@ const Home = ({ type }) => {
 
         const res = await newRequest.get(url, {
           headers: {
-            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjZkMmVkYmY3MjVkYzE0YjUwYjhkYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NDQ2MDM4OCwiZXhwIjoxNjg3MDUyMzg4fQ.m5mC3fyZuOebiFWs_NCDZuwJHWs8ycIN7fPxQMR3J9I",
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjZkMmVkYmY3MjVkYzE0YjUwYjhkYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NDQ2MDM4OCwiZXhwIjoxNjg3MDUyMzg4fQ.m5mC3fyZuOebiFWs_NCDZuwJHWs8ycIN7fPxQMR3J9I",
           },
         });
 
-        console.log(res);
+        setLists(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -46,7 +45,9 @@ const Home = ({ type }) => {
   return (
     <div className="home">
       <Featured type={type} />
-      <List />
+      {lists.map((list, i)=>
+        <List list={list} key={i}/>
+      )}
     </div>
   );
 };

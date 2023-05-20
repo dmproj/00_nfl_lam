@@ -1,15 +1,27 @@
 import { ArrowBackOutlined } from "@mui/icons-material";
 import "./watch.scss";
+import { Link, useLocation } from "react-router-dom";
 
 const Watch = () => {
-  const trailer = "https://samplelib.com/lib/preview/mp4/sample-5s.mp4";
+  const location = useLocation();
+  const movie = location.state ? location.state.movie : null;
+
+  if (!movie) {
+    // Render a loading state or handle the case where movie is not available
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="watch">
-        <ArrowBackOutlined className="back"/>
-        Home
+        <Link to="/">
+          <div className="back">
+            <ArrowBackOutlined />
+            Home
+          </div>
+        </Link>
       </div>
-      <video src={trailer} autoPlay={true} loop controls/>
+      <video src={movie.video} autoPlay={true} loop controls />
     </>
   );
 };
