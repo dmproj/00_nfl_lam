@@ -88,12 +88,12 @@ router.get("/", verify, async (req, res) => {
   if (req.user.isAdmin) {
     try {
       const movies = await Movie.find();
-      res.status(200).json(movies);
+     return res.status(200).json(movies);
     } catch (error) {
       res.status(500).json(error);
     }
   } else {
-    res.status(403).json("MOVIE GET you are not allowed");
+    return res.status(403).json("MOVIE GET you are not allowed");
   }
 });
 
